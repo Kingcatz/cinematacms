@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block headtitle %}Manage users - {{PORTAL_NAME}}{% endblock headtitle %}
+
+{% block headermeta %}
+
+<meta property="og:title" content="Manage users - {{PORTAL_NAME}}">
+<meta property="og:type" content="website">
+<meta property="og:description" content="">
+
+{% endblock headermeta %}
+
+{% block content %}
+
+<div class="export-csv media-list-wrapper">
+	<div class="media-list-row">
+		<a href="/manage/users/export">CSV export with all users</a>
+	</div>
+</div>
+
+<div id="page-manage-users"></div>{% endblock %}
+
+{% block bottomimports %}
+<script src="{% static "js/manage-users.js" %}"></script>
+{% endblock bottomimports %}

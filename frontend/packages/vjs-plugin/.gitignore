@@ -1,0 +1,7 @@
+node_modules/
+documentation/
+visualizer/
+coverage/
+out/
+
+playground*

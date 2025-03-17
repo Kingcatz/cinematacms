@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block headtitle %}Edit profile - {% endblock headtitle %}
+
+{% block innercontent %}
+<div class="user-action-form-wrap">
+	<h1>Edit Profile</h1>
+	<div class="user-action-form-inner">
+		<form enctype="multipart/form-data" action="" method="post" class="post-form">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button class="primaryAction" type="submit">Update Profile</button>
+		</form>
+	</div>
+</div>
+{% endblock innercontent %}

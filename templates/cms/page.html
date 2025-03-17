@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block headtitle %}{{page.title}} - {{PORTAL_NAME}}{% endblock headtitle %}
+
+{% block headermeta %}
+
+<meta property="og:title" content="{{page.title}} - {{PORTAL_NAME}}">
+<meta property="og:type" content="website">
+<meta property="og:description" content="">
+
+<meta property="og:image" content="{{FRONTEND_HOST}}/media/userlogos/cinemata_share_banner-01.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [{
+		"@type": "ListItem",
+		"position": 1,
+        "name": "{{PORTAL_NAME}}",
+        "item": {
+			"@type": "WebPage",
+	        "@id": "{{FRONTEND_HOST}}"
+	    }
+    }]
+}
+</script>
+
+{% endblock headermeta %}
+
+{% block innercontent %}
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+
+<div class="custom-page-wrapper">
+
+	<h1>{{page.title}}</h1>
+	
+	{{page.description|safe}}
+
+{% endblock %}

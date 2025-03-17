@@ -1,0 +1,65 @@
+MediaCMS.site = {
+    id: 'cinemata',
+    title: "{{PORTAL_NAME}}",
+    url: '{{FRONTEND_HOST}}/',
+    api: '{{FRONTEND_HOST}}/api/v1',
+    topmessage: '{{TOP_MESSAGE}}',
+    theme: {
+        mode: 'dark',    // Valid values: 'light', 'dark'.
+        switch: {
+            position: 'sidebar',    // Valid values: 'header', 'sidebar'.
+        },
+    },
+    logo:{
+        lightMode:{
+            img: "{{FRONTEND_HOST}}/static/images/cinemata_logo-darkbg.jpg",
+            svg: "{{FRONTEND_HOST}}/static/images/cinemata_logo-darkbg.svg"
+        },
+        darkMode:{
+            img: "{{FRONTEND_HOST}}/static/images/cinemata_logo-darkbg.jpg",
+            svg: "{{FRONTEND_HOST}}/static/images/cinemata_logo-darkbg.svg"
+        },
+    },
+    pages: {
+        latest:{
+            title: 'Recent uploads',
+        },
+        featured:{
+            title: 'Featured',
+        },
+        recommended:{
+            title: 'Popular',
+        },
+        members:{
+            enabled: false,
+        },
+    },
+    userPages: {
+        liked: {
+            enabled: {% if request.user.is_authenticated %}true{% else %}false{% endif %},
+            title: 'My favorites',
+        },
+        history: {
+            enabled: {% if request.user.is_authenticated %}true{% else %}false{% endif %},
+            title: 'My history',
+        },
+    },
+    taxonomies: {
+        tags: {
+            title: 'Tags',
+        },
+        categories: {
+            title: 'Categories',
+        },
+        topics: {
+            title: 'Topics',
+        },
+        languages: {
+            title: 'Languages',
+        },
+        countries: {
+            title: 'Countries',
+        },
+    },
+};
+

@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+
+        <title>{% block headtitle %}{{PORTAL_NAME}}{% endblock headtitle %}</title>
+
+        {% include "common/head-meta.html" %}
+
+        {% block headermeta %}
+        
+        <meta property="og:title" content="{{PORTAL_NAME}}">
+        <meta property="og:type" content="website">
+
+        {%endblock headermeta %}
+
+        {% block externallinks %}{% endblock externallinks %}
+
+        {% include "common/head-links.html" %}
+
+        {% block topimports %}{%endblock topimports %}
+
+        {% include "config/index.html" %}
+        
+    {% endblock head %}
+
+</head>
+
+<body>
+
+    {% block beforecontent %}{% endblock %}
+
+    <div class="page-main-wrap">
+        {% include "messages.html" %}
+        {% block content %}{% endblock %}
+    </div>
+
+    {% block aftercontent %}{% endblock %}
+
+    {% if LOAD_FROM_CDN %}
+    <script src="https://vjs.zencdn.net/7.18.1/video.min.js"></script>
+    {% else %}
+    <script src="{% static "lib/video-js/7.18.1/video.min.js" %}"></script>
+    {% endif %}
+
+    {% block externalscripts %}{% endblock externalscripts %}
+
+    {% include "common/body-scripts.html" %}
+
+    {% block bottomimports %}{% endblock bottomimports %}
+
+    <!-- Matomo -->
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//matomo.engagemedia.org/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '11']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block headtitle %}Edit channel - {{PORTAL_NAME}}{% endblock headtitle %}
+
+{% block headermeta %}{% endblock headermeta %}
+
+{% block innercontent %}
+<div class="user-action-form-wrap">
+	<h1>Edit Channel</h1>
+	<div class="user-action-form-inner">
+		<form enctype="multipart/form-data" action="" method="post" class="post-form"> {% csrf_token %}
+			{{ form|crispy }}
+			<button class="primaryAction" type="submit">Update Channel</button>
+		</form>
+	</div>
+</div>
+{% endblock innercontent %}

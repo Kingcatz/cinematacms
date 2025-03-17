@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block headtitle %}Add subtitle - {{PORTAL_NAME}}{% endblock headtitle %}
+
+{% block headermeta %}{% endblock headermeta %}
+
+{% block innercontent %}
+	<div class="user-action-form-wrap">
+		<h1>Add Subtitle/CC</h1>
+		<div class="user-action-form-inner">
+			Media: <a href="{{media.get_absolute_url}}">{{media.title}}</a>
+			<form enctype="multipart/form-data" action="" method="post" class="post-form">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<button class="primaryAction" type="submit">Add</button>
+			</form>
+
+
+			{% if subtitles %}
+				<h2>View/Edit Existing Subtitles</h2>
+				<ul>
+					{% for subtitle in subtitles %}
+						<li><a href="{{subtitle.url}}">{{subtitle.language.title}}</a></li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+
+	</div>
+
+
+<script>
+	// increase titles
+	const field_labels = document.querySelectorAll('label');
+	field_labels.forEach((label) => {
+		label.style.fontSize = '140%';
+		label.style.fontWeight = 'bold';
+
+	});
+
+	bengaliCustomMessageShown = false;
+    document.getElementById('id_language').addEventListener('change', function() {
+		if (bengaliCustomMessageShown) {
+			return;
+		} else {
+
+			const selectedText = this.options[this.selectedIndex].text;
+			if (selectedText === "Bengali") {
+				const subtitleDiv = document.getElementById('hint_id_subtitle_file');
+				const message = document.createElement('div');
+				message.id = 'bengali-message';
+				message.textContent = 'Bengali text works best with Safari/Firefox.';
+				subtitleDiv.appendChild(message);
+				bengaliCustomMessageShown = true;
+			}
+		}
+    });
+
+</script>
+
+
+
+{% endblock innercontent %}

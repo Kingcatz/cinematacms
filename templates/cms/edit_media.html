@@ -1,0 +1,672 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block headtitle %}Edit media - {% endblock headtitle %}
+
+{% block innercontent %}
+	<div class="user-action-form-wrap">
+		<h1>Edit Media</h1>
+		<div class="user-action-form-inner">
+			<form enctype="multipart/form-data" action="" method="post" class="post-form">
+				{% csrf_token %}
+
+				<p class="requiredField"><span class="asteriskField">*</span> Required</p>
+
+				<span class="editorial-pocicy-notice">Please check our <a href="./editorial-policy" title="Editorial Policy">Editorial Policy</a> before uploading media.</span>
+
+				{% if form.errors %}
+				{% for field in form %}
+					{% for error in field.errors %}
+					   <div class="alert alert-danger">
+							<strong>{{ error|escape }}</strong>
+					   </div>
+					{% endfor %}
+				{% endfor %}
+			 {% endif %}
+
+			 {% for field in form %}
+				 {% if field.name == "media_file" %}
+					<div class="fieldWrapper">
+					{{ field.errors }}
+					{{ field.label_tag }} <div class="current_media_field">{{ field }} </div>
+					</div>
+
+				{% elif field.name == "allow_whisper_transcribe" %}
+
+					<div class="fieldWrapper" >
+						<div class="transcribe_section_title" style="margin-top: 1.5em; font-size: 120%; font-weight: bold;">
+							Automatic Speech Recognition (Beta)
+						</div>
+						<div id="div_id_allow_whisper_transcribe" class="control-group">
+								<div class="controls">
+										<label for="id_allow_whisper_transcribe" class="checkbox ">
+											{{ field}}
+											<span class="normal_label" style="font-weight: normal !important;">{{ field.label}}</span>
+										</label>
+								</div>
+						</div>
+					</div>
+
+					{% elif field.name == "allow_whisper_transcribe_and_translate" %}
+					<div class="fieldWrapper">
+						<div id="div_id_allow_whisper_transcribe_and_translate" class="control-group">
+								<div class="controls">
+										<label for="id_allow_whisper_transcribe_and_translate" class="checkbox ">
+											{{ field}}
+											<span class="normal_label" style="font-weight: normal !important;">{{ field.label}}</span>
+										</label>
+								</div>
+						</div>
+
+						<div class="transcribe_section_title" style="margin-top: 1.5em; font-size: 120%">
+							To view or edit auto-generated subtitles, go to the Media page and click Edit Subtitles after uploading the video file.
+						</div>
+
+					</div>
+
+
+				{% elif field.name == "uploaded_poster" %}
+					<div class="fieldWrapper">
+						{{ field.errors }}
+						{{ field.label_tag }} <div class="current_uploaded_poster_field">{{ field }} </div>
+					</div>
+
+				{% elif field.name == "custom_license" %}
+                                        <div class="fieldWrapper">
+
+											<div id="div_id_custom_license" class="control-group">
+
+                                            	<label for="id_{{field.name}}" class="control-label ">License</label>
+
+                                            	<input type="hidden" class="license-hidden-field" id="id_{{field.name}}" name="{{field.name}}" value="{{field.value}}" />
+
+												<div class="license_controls">
+
+													<div class="license_controls_header">
+														<span class="selected-license-title"></span>
+														<button type="button" title="Choose license" class="open-licenses-options">Choose</button>
+													</div>
+													<div class="license_controls_options is-hidden">
+
+														<div>
+															<div>
+																<div class="license-form">
+
+																	<div class="license-form-content">
+
+																		<p>Creative Commons licenses help you share your work while keeping your copyright. Other people can copy and distribute your work provided they <a href="https://creativecommons.org/characteristic/by?lang=en" target="_blank" onclick="window.open('http://creativecommons.org/characteristic/by?lang=en', 'characteristic_help', 'width=375,height=300,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=yes,menubar=no,status=yes'); return false;">give you credit</a> -- and only on the conditions you specify here. This page helps you choose those conditions.</p>
+																		<p>If you want to share a work you created with no conditions, choose <a href="https://creativecommons.org/choose/zero/partner?partner_icon_url=https://mediacms.engagemedia.org/static/images/em_cc_logo.jpeg" target="_blank" onclick="window.open('https://creativecommons.org/choose/zero/partner?partner_icon_url=https://mediacms.engagemedia.org/static/images/em_cc_logo.jpeg', 'characteristic_help', 'width=375,height=300,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=yes,menubar=no,status=yes'); return false;">CC0</a>. If you're sharing a work that isn't covered by copyright or on which the copyright has expired, choose the <a href="https://creativecommons.org/choose/mark/partner?partner_icon_url=https://mediacms.engagemedia.org/static/images/em_cc_logo.jpeg" target="_blank" onclick="window.open('https://creativecommons.org/choose/mark/partner?partner_icon_url=https://mediacms.engagemedia.org/static/images/em_cc_logo.jpeg', 'characteristic_help', 'width=375,height=300,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=yes,menubar=no,status=yes'); return false;">Public Domain Mark</a>.</p>
+
+																		<div class="license-radio-options">
+
+																			<p>
+																				<span><strong>Allow commercial uses of your work?</strong> (<a href="https://creativecommons.org/characteristic/nc?lang=en_US" target="_blank" onclick="window.open('https://creativecommons.org/characteristic/nc?lang=en_US', 'characteristic_help', 'width=375,height=300,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=yes,menubar=no,status=yes'); return false;">more info</a>)</span>
+																				<label><input type="radio" name="field_commercial" value="Yes"/>Yes</label>
+																				<label><input type="radio" name="field_commercial" value="No"/>No</label>
+																			</p>
+
+																			<p>
+																				<span><strong>Allow modifications of your work?</strong> (<a href="https://creativecommons.org/characteristic/nd?lang=en_US" target="_blank" onclick="window.open('https://creativecommons.org/characteristic/nd?lang=en_US', 'characteristic_help', 'width=375,height=300,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=yes,menubar=no,status=yes'); return false;">more info</a>)</span>
+																				<label><input type="radio" name="field_derivatives" value="Yes"/>Yes</label>
+																				<label><input type="radio" name="field_derivatives" value="Partially"/>Yes, as long as others share alike (<a href="https://creativecommons.org/characteristic/sa?lang=en_US" target="_blank" onclick="window.open('https://creativecommons.org/characteristic/sa?lang=en_US', 'characteristic_help', 'width=375,height=300,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=yes,menubar=no,status=yes'); return false;">more info</a>)</label>
+																				<label><input type="radio" name="field_derivatives" value="No"/>No</label>
+																			</p>
+																		</div>
+
+																		<p><em>Note:</em> To license a work, you must be its copyright holder or have express authorization from its copyright holder to do so.</p>
+																		<p>Creative Commons does not provide legal advice or services. We provide form legal documents; the rest is up to you.</p>
+
+																	</div>
+
+																	<div class="license-form-buttons">
+																		<button type="button" class="btn-close-license">CANCEL</button>
+																		<button type="button" class="btn-choose-license">UPDATE LICENSE</button>
+																	</div>
+
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+												</div>
+											</div>
+
+                                        </div>
+
+				    {% else %}
+                                        <div class="fieldWrapper">
+                                            {{ field|as_crispy_field }}
+                                        </div>
+				    {% endif %}
+                                {% endfor %}
+
+                                <button class="primaryAction" type="submit">Update Media</button>
+                        </form>
+                </div>
+        </div>
+
+        <style>
+
+			.license_controls{}
+
+			.license_controls_header{
+				position:relative;
+				padding-right: 96px;
+			}
+
+			.license_controls_header span{
+				width:100%;
+				min-height: 36px;
+				display: block;
+				line-height:1.3;
+				padding:0.57142875em;
+				border-radius: 1px 0 0 1px;
+				border-style:solid;
+				border-width:1px 0 1px 1px;
+				border-color: var(--input-border-color);
+				background-color: var(--input-bg-color);
+			}
+
+			.license_controls_header button{
+				position:absolute;
+				top:0;
+				right:0;
+				bottom:0;
+				padding:0;
+				width:96px;
+			}
+
+			.license_controls_options {
+				position:fixed;
+				top:56px;
+				left:0;
+				right:0;
+				bottom:0;
+				z-index:+1;
+				display:block;
+			}
+
+			.license_controls_options.is-hidden{
+				display:none;
+			}
+
+			.license_controls_options:before{
+				content:"";
+				position:absolute;
+				display:block;
+				top:0;
+				left:0;
+				right:0;
+				bottom:0;
+				background-color:rgba(0,0,0, 0.5);
+			}
+
+			.license_controls_options > div {
+				display:table;
+				width:100%;
+				height:100%;
+			}
+
+			.license_controls_options > div > div {
+				display:table-cell;
+				vertical-align: middle;
+			}
+
+			.license_controls_options .license-form{
+				position:relative;
+				display:block;
+				width:100%;
+				max-width: 640px;
+				margin:0 auto;
+				box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.4);
+				background-color: var(--user-action-form-inner-bg-color);
+			}
+
+			.license_controls_options .license-form p{
+				margin:0 0 12px;
+			}
+
+			.license_controls_options .license-form p:last-child{
+				margin-bottom:0;
+			}
+
+			.license_controls_options .license-form p a{
+				margin:0;
+			}
+
+			.license_controls_options .license-form strong{
+				font-weight:500;
+			}
+
+			.license_controls_options .license-form label input{
+				margin-left:0;
+			}
+
+			.license_controls_options .license-form .license-radio-options {
+				display:block;
+				margin-bottom:16px;
+			}
+
+			.license_controls_options .license-form .license-radio-options p{
+				margin:0;
+				border-radius: 1px;
+				padding-bottom:6px;
+				background-color: var(--body-bg-color);
+			}
+
+			.license_controls_options .license-form .license-radio-options p + p {
+				margin-top:4px;
+			}
+
+			.license_controls_options .license-form .license-radio-options p span{
+				display: block;
+				padding:12px 16px;
+				margin-bottom:6px;
+				border-bottom:1px solid;
+				border-color: var(--input-border-color);
+			}
+
+			.license_controls_options .license-form .license-radio-options p label{
+				width:100%;
+				padding:6px 16px;
+			}
+
+			.license_controls_options .license-form-content{
+				position:relative;
+				display:block;
+				padding:24px 24px;
+				max-height:70vh;
+				overflow:auto;
+			}
+
+			.license_controls_options .license-form-buttons{
+				position:relative;
+				display:inline-block;
+				width:100%;
+				float:left;
+				padding:16px 24px;
+				border-top: 1px solid var(--body-bg-color);
+				background-color: var(--user-action-form-inner-bg-color);
+			}
+
+			.license_controls_options .license-form-buttons button{
+				position:relative;
+				display:inline-block;
+				line-height:38px;
+				padding:0 12px;
+			}
+
+			.license_controls_options .license-form-buttons button.btn-close-license{
+				float:left;
+			}
+
+			.license_controls_options .license-form-buttons button.btn-choose-license{
+				float:right;
+			}
+
+
+			#div_id_no_license .controls{
+				margin-top:0.5em;
+			}
+
+			#div_id_no_license .controls label{
+				margin-top:0;
+			}
+
+        </style>
+                {{ licenses|json_script:"licenses-data" }}
+
+        <script type="text/javascript">
+
+			// add eventlistener on document.querySelector('#div_id_state select')
+			// when value is 'restricted', show div with id div_id_password. Otherwise hide it
+			function show_password_field() {
+				if (document.querySelector('#div_id_password') !== null) {
+
+
+					if (document.querySelector('#div_id_state select').value === 'restricted') {
+						document.querySelector('#div_id_password').style.display = 'block';
+					} else {
+						document.querySelector('#div_id_password').style.display = 'none';
+					}
+				}
+			}
+
+			document.querySelector('#div_id_state select').addEventListener('change', show_password_field);
+
+			// set correct text
+			document.querySelector('label[for="id_uploaded_poster"]').innerHTML = 'Thumbnail Image Upload';
+
+			if (document.querySelector('label[for="id_media_file"]') !== null) {
+				document.querySelector('label[for="id_media_file"]').innerHTML = 'Media Upload';
+			}
+
+
+			// change text to classes that start with current_
+			Array.from(document.querySelectorAll("[class^=current_]")).forEach(function(el) {
+				el.outerHTML = (el.outerHTML.replace('Currently:', 'Current File'));
+			});
+
+			// fix href
+			if (document.querySelector('.current_media_field a') !== null) {
+
+				// fix name
+				let currentMediaFilePath = document.querySelector('.current_media_field a').innerText;
+				let tempList = currentMediaFilePath.split('/');
+				let currentMediaFileName = tempList[tempList.length -1];
+
+				currentMediaFilePath = document.querySelector('.current_media_field a').href;
+				tempList = currentMediaFilePath.split('/media_files/');
+				let currentMediaFileNameURL = `/media/${tempList[tempList.length -1]}`;
+
+				document.querySelector('.current_media_field a').innerText = currentMediaFileName;
+				document.querySelector('.current_media_field a').href = currentMediaFileNameURL;
+			}
+
+			let currentUploadedPosterFilePath = document.querySelector('.current_uploaded_poster_field a');
+
+			if(currentUploadedPosterFilePath !== null) {
+				currentUploadedPosterFilePath = currentUploadedPosterFilePath.innerText;
+				tempList = currentUploadedPosterFilePath.split('/');
+				let currentUploadedPosterFileName = tempList[tempList.length -1];
+
+				// fix href
+				currentUploadedPosterFilePath = document.querySelector('.current_uploaded_poster_field a').href;
+				tempList = currentUploadedPosterFilePath.split('/media_files/');
+				let currentUploadedPosterFileNameURL = `/media/${tempList[tempList.length -1]}`;
+				document.querySelector('.current_uploaded_poster_field a').innerText = currentUploadedPosterFileName;
+				document.querySelector('.current_uploaded_poster_field a').href = currentUploadedPosterFileNameURL;
+
+				document.querySelector('#uploaded_poster-clear_id').remove();
+				document.getElementsByClassName('current_uploaded_poster_field')[0].querySelector('label').remove();
+
+			}
+
+
+
+			// remove some fields
+			document.querySelector('#hint_id_allow_download').remove();
+			document.querySelector('#hint_id_enable_comments').remove();
+			document.querySelector('#hint_id_year_produced').remove();
+
+
+			// increase titles
+			const field_labels = document.querySelectorAll('label');
+			field_labels.forEach((label) => {
+				label.style.fontSize = '140%';
+				label.style.fontWeight = 'bold';
+
+			});
+
+			document.querySelector('.requiredField').style.fontSize = '120%';
+			document.querySelector('.requiredField').style.fontWeight = 'bold';
+			document.querySelector('.requiredField').style.color = 'white';
+
+        	function removeClassname(el, cls) {
+			    if (el.classList) {
+			        el.classList.remove(cls);
+			    } else {
+			        el.className = el.className.replace(new RegExp('(^|\\b)' + cls.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+			    }
+			}
+
+			function addClassname(el, cls) {
+			    if (el.classList) {
+			        el.classList.add(cls);
+			    } else {
+			        el.className += ' ' + cls;
+			    }
+			}
+
+        	var isLicensePopupOpen = false;
+        	var isLicenseDisabled = false;
+
+	        var selectedFields = {
+	        	commercial: null,
+	        	derivatives: null,
+	        };
+
+			document.addEventListener("DOMContentLoaded", function(event) {
+
+                var licenses = JSON.parse( JSON.parse(document.getElementById('licenses-data').textContent) );
+
+				var elem = {
+					selected_license_title: document.querySelector('.selected-license-title'),
+					license_value_field: document.querySelector('input[name="custom_license"]'),
+					popup: document.querySelector('.license_controls_options'),
+					btn: {
+						openPopup: document.querySelector('.open-licenses-options'),
+						closePopup: document.querySelector('.btn-close-license'),
+						chooseLicense: document.querySelector('.btn-choose-license'),
+					},
+					license_input:  {
+						commercial: document.querySelectorAll('input[name="field_commercial"]'),
+						derivatives: document.querySelectorAll('input[name="field_derivatives"]'),
+					},
+					license_disable_check: document.querySelector('input[name="no_license"]'),
+				};
+
+				var init_license_fields = ( function( defaultValue ){
+
+					if( null !== elem.license_disable_check ){
+
+						if( "none" === elem.license_value_field.value || "None" === elem.license_value_field.value ){
+							isLicenseDisabled = true;
+							elem.license_disable_check.checked = true;
+						}
+						else{
+							isLicenseDisabled = elem.license_disable_check.checked;
+						}
+					}
+
+					let k;
+					let found = false;
+
+					for(k in licenses){
+
+						if( licenses.hasOwnProperty(k) ){
+
+							if( defaultValue === k.toString() ){
+
+								found = true;
+
+								if( ! isLicenseDisabled ){
+									elem.selected_license_title.innerHTML = licenses[k].title;
+								}
+
+								selectedFields.commercial = licenses[k].allow_commercial;
+								selectedFields.derivatives = licenses[k].allow_modifications;
+
+								update_license_fields();
+							}
+						}
+					}
+
+					if( ! isLicenseDisabled && ! found ){
+						isLicenseDisabled = true;
+						elem.license_disable_check.checked = true;
+					}
+
+					if( isLicenseDisabled ){
+						elem.selected_license_title.innerHTML = "-";
+					}
+
+				}).bind(this);
+
+				var update_license_fields = (function(){
+
+					if( null === selectedFields.commercial || null === selectedFields.derivatives ){
+						elem.selected_license_title.innerHTML = '';
+						return;
+					}
+
+					var commercialValue = selectedFields.commercial;
+					var derivativesValue = selectedFields.derivatives;
+
+					var commercialInput = elem.license_input.commercial;
+					var derivativesInput = elem.license_input.derivatives;
+
+					var i;
+
+					if( null !== commercialInput && commercialInput.length ){
+						i = 0;
+						while(i<commercialInput.length){
+							if( commercialInput[i].value === commercialValue ){
+								commercialInput[i].checked = true;
+							}
+							else{
+								commercialInput[i].checked = false;
+							}
+							i += 1;
+						}
+					}
+
+					if( null !== derivativesInput && derivativesInput.length ){
+						i = 0;
+						while(i<derivativesInput.length){
+							if( derivativesInput[i].value === derivativesValue ){
+								derivativesInput[i].checked = true;
+							}
+							else{
+								derivativesInput[i].checked = false;
+							}
+							i += 1;
+						}
+					}
+
+				}).bind(this);
+
+				function on_open_popup(ev){
+					removeClassname(elem.popup, 'is-hidden');
+					isLicensePopupOpen = true;
+				}
+
+				function on_close_popup(ev){
+					addClassname(elem.popup, 'is-hidden');
+					isLicensePopupOpen = false;
+				}
+
+				function on_license_choose(ev){
+
+					addClassname(elem.popup, 'is-hidden');
+
+					isLicensePopupOpen = false;
+					selectedFields.commercial = selectedFields.commercial;
+					selectedFields.derivatives = selectedFields.derivatives;
+
+					if( null !== elem.selected_license_title ){
+
+						let k;
+						for(k in licenses){
+
+							if( licenses.hasOwnProperty(k) ){
+
+								if( selectedFields.commercial === licenses[k].allow_commercial && selectedFields.derivatives === licenses[k].allow_modifications ){
+
+									elem.selected_license_title.innerHTML = licenses[k].title;
+									elem.license_value_field.setAttribute('value', k);
+
+									isLicenseDisabled = false;
+									elem.license_disable_check.checked = false;
+								}
+							}
+						}
+					}
+				}
+
+				function on_commercial_option_change(ev){
+					selectedFields.commercial = ev.target.value;
+				}
+
+				function on_derivatives_option_change(ev){
+					selectedFields.derivatives = ev.target.value;
+				}
+
+				function on_license_disable_change(ev){
+
+					isLicenseDisabled = elem.license_disable_check.checked;
+
+					if( isLicenseDisabled ){
+						elem.selected_license_title.innerHTML = '-';
+					}
+					else if( null === selectedFields.commercial || null === selectedFields.derivatives ){
+						elem.selected_license_title.innerHTML = '';
+						return;
+					}
+					else{
+						let k;
+						for(k in licenses){
+							if( licenses.hasOwnProperty(k) ){
+								if( selectedFields.commercial === licenses[k].allow_commercial && selectedFields.derivatives === licenses[k].allow_modifications ){
+									elem.selected_license_title.innerHTML = licenses[k].title;
+								}
+							}
+						}
+					}
+				}
+
+				var button_events = ( function(){
+
+					if( null !== elem.btn.openPopup ){
+						elem.btn.openPopup.addEventListener( 'click', on_open_popup.bind(this));
+					}
+
+					if( null !== elem.btn.closePopup ){
+						elem.btn.closePopup.addEventListener( 'click', on_close_popup.bind(this));
+					}
+
+					if( null !== elem.btn.chooseLicense ){
+						elem.btn.chooseLicense.addEventListener( 'click', on_license_choose.bind(this));
+					}
+
+				}).bind(this);
+
+				var input_events = ( function(){
+
+					var commercialInput = elem.license_input.commercial;
+					var derivativesInput = elem.license_input.derivatives;
+
+					var i;
+
+					if( null !== commercialInput && commercialInput.length ){
+						i = 0;
+						while(i<commercialInput.length){
+							commercialInput[i].addEventListener( 'change', on_commercial_option_change.bind(this));
+							i += 1;
+						}
+					}
+
+					if( null !== derivativesInput && derivativesInput.length ){
+						i = 0;
+						while(i<derivativesInput.length){
+							derivativesInput[i].addEventListener( 'change', on_derivatives_option_change.bind(this));
+							i += 1;
+						}
+					}
+
+					if( null !== elem.license_disable_check ){
+						elem.license_disable_check.addEventListener( 'change', on_license_disable_change.bind(this));
+					}
+
+				}).bind(this);
+
+				if( null !== elem.popup && null !== elem.license_value_field ){
+					button_events();
+					input_events();
+					init_license_fields( elem.license_value_field.value.toString() );
+				}
+
+			});
+
+			// run show_password_field() only when the DOM has loaded
+			document.addEventListener("DOMContentLoaded", function(event) {
+				show_password_field();
+			});
+
+        </script>
+
+
+
+{% endblock innercontent %}
+

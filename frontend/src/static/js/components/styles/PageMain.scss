@@ -1,0 +1,88 @@
+.page-main-wrap{
+
+	padding-top: var(--header-height);
+	// padding-bottom: 16px;
+	// overflow:hidden;
+	// min-height:100vh;
+	will-change: padding-left;
+
+	@media ( min-width: 768px ){
+		.visible-sidebar &{
+			padding-left: var(--sidebar-width);
+			opacity:1;
+		}
+	}
+
+	.visible-sidebar #page-media &{
+		padding-left: 0;
+	}
+
+	.visible-sidebar & {
+
+		#page-media{	// @note: This need only because of the differences ( of element with class="page-main-wrap" ) between dev environment and online app.
+			padding-left: 0;
+		}
+	}
+
+	> * {
+		// border:1rem solid yellow;
+	}
+
+	// transition-duration:0.2s;
+
+	body.sliding-sidebar &{
+		transition-property: padding-left;
+		transition-duration:0.2s;
+		// transition-timing-function:linear;
+	}
+	
+	body.visible-sidebar &{
+		// transition-property: padding-left;
+		
+		// transition-timing-function:linear;
+	}
+}
+
+#page-profile-home,
+#page-profile-videos,
+#page-profile-playlists,
+#page-profile-about,
+#page-liked.profile-page-liked,
+#page-history.profile-page-history{
+
+	// .page-main-wrap{
+		// min-height:calc(100vh - 56px);s
+		// min-height:100vh;
+
+		.page-main{
+			min-height:calc(100vh - var(--header-height));
+		}
+	// }
+}
+
+.page-main{
+	position:relative;
+	width:100%;
+	padding-bottom: 16px;
+
+	/*padding-left:1em;
+	padding-right:1em;
+	padding-bottom:1.5em;*/
+}
+
+.page-main-inner{
+	display:block;
+	margin: 1em 1em 0 1em;
+}
+
+#page-profile-home,
+#page-profile-videos,
+#page-profile-playlists,
+#page-profile-about,
+#page-liked.profile-page-liked,
+#page-history.profile-page-history{
+
+	.page-main-wrap{
+		background-color: var(--body-bg-color);
+	}
+}

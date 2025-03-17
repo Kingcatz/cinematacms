@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block headtitle %}Contact us - {{PORTAL_NAME}}{% endblock headtitle %}
+
+{% block headermeta %}
+
+<meta property="og:title" content="Contact us - {{PORTAL_NAME}}">
+<meta property="og:type" content="website">
+<meta property="og:description" content="">
+
+<meta property="og:image" content="{{FRONTEND_HOST}}/media/userlogos/cinemata_share_banner-01.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "{{PORTAL_NAME}}",
+        "item": {
+            "@type": "WebPage",
+            "@id": "{{FRONTEND_HOST}}"
+        }
+    },
+    {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Contact us",
+        "item": {
+            "@type": "ContactPage",
+            "@id": "{{FRONTEND_HOST}}/contact"
+        }
+    }]
+}
+</script>
+
+{%endblock headermeta %}
+
+{% block innercontent %}
+
+<div class="user-action-form-wrap">
+
+    <h1>Contact us</h1>
+
+    <div class="user-action-form-inner">
+
+
+        {% if success_msg %}
+            <p>{{success_msg}}</p>
+        {% else %}
+
+            <form enctype="multipart/form-data" action="" method="post" class="post-form">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="primaryAction" type="submit">Submit</button>
+            </form>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

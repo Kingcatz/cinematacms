@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block headtitle %}Creative Commons - {{PORTAL_NAME}}{% endblock headtitle %}
+
+{% block headermeta %}
+
+<meta property="og:title" content="Creative Commons - {{PORTAL_NAME}}">
+<meta property="og:type" content="website">
+<meta property="og:description" content="">
+
+<meta property="og:image" content="{{FRONTEND_HOST}}/media/userlogos/cinemata_share_banner-01.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [{
+		"@type": "ListItem",
+		"position": 1,
+        "name": "{{PORTAL_NAME}}",
+        "item": {
+			"@type": "WebPage",
+	        "@id": "{{FRONTEND_HOST}}"
+	    }
+    },
+    {
+		"@type": "ListItem",
+		"position": 2,
+        "name": "Creative Commons",
+        "item": {
+			"@type": "WebPage",
+	        "@id": "{{FRONTEND_HOST}}/creative-commons"
+	    }
+    }]
+}
+</script>
+
+{% endblock headermeta %}
+
+{% block innercontent %}
+<div class="custom-page-wrapper">
+
+	<h1>Creative Commons</h1>
+
+	<hr/>
+
+	<p><em>Creative Commons is a form of open content licensing we use here on EngageMedia. The following is a bit more about how it works on our site.</em></p>
+
+	<p>We're interested in <a href="http://en.wikipedia.org/wiki/Open_content_license" target="_blank" rel="noffolow">open content licensing</a> at EngageMedia because we're interested in collaborative storytelling, and in moving away from restrictive copyright laws that enforce rigid ideas of individual intellectual property. Copyright legislation is making criminals out of most of us, and they're only getting worse with increased gaol terms and fines as penalties for copyright infringement. The big media companies are pressuring governments to regulate intellectual property further, with their own interests in mind. These laws just do not fit with the way media is used and re-distributed in contemporary society.</p>
+
+	<p><a href="http://creativecommons.org" target="_blank" rel="noffolow"> Creative Commons</a> offers a practical framework for video makers to use and a widely supported range of licenses that have been localised for compliance with copyright law in many nations. Creative Commons licenses help you share your work while keeping your copyright. Other people can copy and distribute your work provided they <a href="http://creativecommons.org/characteristic/by?lang=en" target="_blank" rel="noffolow">give you credit</a> — and only on the conditions you specify.</p>
+
+	<p>This page explains a bit about how you choose those conditons, to help you understand the implications of choosing each license.</p>
+
+	<p><strong>You will be asked these questions when choosing your license:</strong></p>
+
+	<p><strong>1. Allow commercial uses of your work?</strong></p>
+
+	<ul><li><em>By selecting <strong>"Yes"</strong> :</em></li></ul>
+
+	<p>You are choosing a license that permits others to copy, distribute and transmit the work for any purpose, including (but not limited to) commercial or profit-generating purposes.</p>
+	<p>This is a less restrictive option you may like to choose when you really want to get your message out, or when you are not concerned with generating profit from your work.</p>
+	<p>If someone can freely use your work for commercial purposes, they are unlikely to pay you to use it.</p>
+
+	<ul><li><em>By selecting <strong>"No"</strong> :</em></li></ul>
+
+	<p>By choosing this Non-Commercial option you permit others to copy, distribute and transmit the work. In return, licensees may not use the work for commercial purposes.</p>
+	<p>You are more likely to be able to generate revenue from your work by choosing this option. If the licence does not allow the use of your work for commercial purposes, then you can sell them that right in another agreement, thereby generating money from your work.</p>
+	<p>So people can still potentially use your work for commercial purposes but ONLY if they contact you to get your explicit permission. This would be explained in another agreement separate to this license.</p>
+
+	<p><strong>2. Allow modifications of your work?</strong></p>
+
+	<ul><li><em>By selecting <strong>"Yes"</strong> :</em></li></ul>
+
+	<p>You are choosing a license that allows other to make derivative works, and re-distribute them.</p>
+	<p>This will allow others to freely remix or re-edit your work. They are not agreeing to also let others remix or re-edit their derivative work based upon your own, as in the Share-Alike option below.</p>
+	<p>This option is the least restrictive and means anyone can use parts of your work to use in their own work, adding to a pool of footage and programs that can be used to make new works. Many independent video producers do not have access to large libraries of material, so you are potentially helping other video makers with little resources, as well as allowing anyone else to re-edit and use parts of your work in any way they choose to within their own productions.</p>
+	<p>It is important to note that by choosing this option you will not have control over how they use your work within their own production, it may not always be used in a way that you like.</p>
+
+	<ul><li><em>By selecting <strong>"Yes - share alike"</strong> :</em></li></ul>
+
+	<p>You are choosing a license that allows others to distribute derivative works only under a licence identical to the licence that governs your work.</p>
+	<p>This option says that anyone can re-edit your work, or use parts of it in their own productions. However they must let others do the same, under exactly the same license that you choose. For example, if you choose Noncommerical Share-Alike, they must also choose the Noncommercial to attach to their own work that they make using part of yours.</p>
+	<p>This forces other people to share their work, if you share yours, encouraging the growth of a pool of creative resources that may be used by everybody. You may still not always like the way your work is re-used, but perhaps you'll appreciate the diversity of context, and opinion.</p>
+	<p>A licence cannot feature both the Share-Alike and No Derivative Works options. The Share-Alike requirement applies only to derivative works.</p>
+
+	<ul><li><em>By selecting <strong>"No"</strong> :</em></li></ul>
+
+	<p>You are choosing a No-Derivatives licence that permits others to copy, distribute and transmit only unaltered copies of the work — not derivative works based on it.</p>
+	<p>People are not allowed to re-edit or remix your work.</p>
+	<p>You can still make another agreement individually outside this license to enable someone to do so, but by default they are not permitted to alter your work.</p>
+
+	<br/>
+
+	<h2>Licenses Overview</h2>
+
+	<hr/>
+
+	<p> There is an overview of each of the six licenses you can choose using combinations of the options above here:</p>
+
+	<p><a href="http://creativecommons.org/about/licenses/meet-the-licenses" target="_blank" rel="nofollow">Meet the Licenses</a></p>
+
+	<br/>
+
+	<h2>More Information</h2>
+
+	<hr/>
+
+	<p>Here are some issues raised by the Creative Commons people about what you should consider before applying a CC license to your work:</p>
+
+	<p><a href="http://creativecommons.org/about/think" target="_blank" rel="nofollow">http://creativecommons.org/about/think</a></p>
+
+	<p>There is more information regarding Creative Commons on their website. In particular their Frequently Asked Questions section should be able to answer most of your queries:</p>
+
+	<p><a class="generated" href="http://creativecommons.org/learnmore/faq" target="_blank" rel="nofollow">http://creativecommons.org/learnmore/faq</a></p>
+
+	<br/>
+
+	<h3 class="h2">Learn more</h3>
+
+	<hr/>
+
+	<p>You can learn more about the various Creative Commons licences <a href="https://creativecommons.org/licenses/" target="_blank" rel="nofollow">here</a>.</p>
+	<!--	<p>To license a work, <strong>you must be its copyright holder</strong> or have express authorization from its copyright holder to do so. Do not upload videos to EngageMedia unless they are yours or you have the owner's permission.</p> -->
+
+	<br/>
+</div>
+{% endblock %}

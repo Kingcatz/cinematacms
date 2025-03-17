@@ -1,0 +1,70 @@
+MediaCMS.contents = {
+    header: {
+        right: null,
+        onLogoRight: 'Social issue films about the Asia-Pacific',
+    },
+    sidebar: {
+        mainMenuExtraItems: [{
+			text: "Playlists",
+			link: "/user/emnews/playlists",
+			icon: 'playlist_play',
+		}],
+        navMenuItems: [{
+            text: "About Cinemata",
+            link: "/about",
+            icon: 'contact_support',
+        }, {
+            text: "Editorial policy",
+            link: "/editorial-policy",
+            icon: 'description',
+        }, {
+            text: "Contact",
+            link: "/contact",
+            icon: 'alternate_email',
+        }],
+		belowNavMenu: '<ul class="social-media-links">\
+		                <li>\
+		                    <a href="https://mailer.cinemata.org" target="_blank" rel="noreferrer" title="" alt="">\
+								<img src="/static/images/icons/dark-mode/newsletter.png" loading="lazy" alt=""/>\
+		                    </a>\
+		                </li>\
+		                <li>\
+		                    <a href="http://www.facebook.com/cinematavideo" target="_blank" rel="noreferrer" title="" alt="">\
+								<img src="/static/images/icons/dark-mode/facebook.png" loading="lazy" alt="" />\
+		                    </a>\
+		                </li>\
+		                <li>\
+		                    <a href="http://twitter.com/cinemata" target="_blank" rel="noreferrer" title="" alt="">\
+		                        <img src="/static/images/icons/dark-mode/twitter.png" loading="lazy" alt="" />\
+		                    </a>\
+		                </li>\
+		            </ul>',
+        footer: '<div class="copyright-wrap">\
+                    <div class="copyright-notice">\
+                        <a href="https://engagemedia.org" target="_blank" rel="noreferrer" title="EngageMedia">\
+                            <span>\
+                                <img src="/static/images/em_logo_dark.png" alt="" class="em-dark" />\
+                                <img src="/static/images/em_logo_light.png" alt="" class="em-light" />\
+                            </span>\
+                        </a>\
+                    </div>\
+                    <div class="page-sidebar-bottom-content">powered by <a href="//demo.mediacms.io" title="mediacms.io" target="_blank" rel="noreferrer">mediacms.io</a></div>\
+                </div>\
+                <ul class="sidebar-bottom-menu">\
+                    <li><a href="https://cinemata.org/terms" title="Terms">Terms</a></li>\
+                    <li><a href="http://engagemedia.org/privacy/" title="Privacy">Privacy</a></li>\
+                </ul>',
+    },
+    uploader: {
+        // belowUploadArea: "{{PRE_UPLOAD_MEDIA_MESSAGE}}",
+        belowUploadArea: 'Please check our <a href="./editorial-policy" title="Editorial Policy">Editorial Policy</a> before uploading media.<br/>Any media that does not comply with the policy will be deleted from Cinemata.org.<br/>Trusted Users may upload up to 10 media files. <a href="/contact" title="Contact us">Contact us</a> to apply for Trusted User status',
+        postUploadMessage: "{{POST_UPLOAD_AUTHOR_MESSAGE_UNLISTED_NO_COMMENTARY}}",
+    },
+    notifications:{
+        messages: {
+            addToLiked: 'Added to favorites',
+            removeFromLiked: 'Removed from favorites'
+        },
+    },
+};
+

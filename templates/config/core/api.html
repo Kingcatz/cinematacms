@@ -1,0 +1,19 @@
+MediaCMS.api = {
+	media: "/media",
+    playlists: "/playlists",
+    comments: '/comments',
+    search: "/search",
+    tags: '/tags',
+    categories: '/categories',
+    topics: '/topics',
+    languages: '/languages',
+    countries: '/countries',
+    members: '/users',
+    users: '/users',
+    liked: '/user/action/like',
+    history: '/user/action/watch',
+	actions: '/actions',
+    {% if IS_MEDIACMS_ADMIN or IS_MEDIACMS_MANAGER or IS_MEDIACMS_EDITOR %}manage_media: '/manage_media',{% endif %}
+    {% if IS_MEDIACMS_ADMIN or IS_MEDIACMS_MANAGER %}manage_users: '/manage_users',{% endif %}
+    {% if IS_MEDIACMS_ADMIN or IS_MEDIACMS_MANAGER or IS_MEDIACMS_EDITOR %}manage_comments: '/manage_comments',{% endif %}
+};

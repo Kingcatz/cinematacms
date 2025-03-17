@@ -1,0 +1,129 @@
+@mixin multiline_texts_excerpt($font-size:1em, $line-height: 1.15, $lines-to-show: 2, $bg-color: transparent) {
+
+	line-height: $line-height;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	background-color: $bg-color;
+
+	/* Fallback for non-webkit */
+	display: block;
+	max-height: $lines-to-show * $line-height;
+
+	/* Only for non-webkit */
+	display: -webkit-box;
+	-webkit-line-clamp: $lines-to-show;
+	-webkit-box-orient: vertical;
+	white-space: normal;
+
+	// @note: Probably doesn't need.
+	/*@-moz-document url-prefix() {
+
+		position: relative;
+		padding-right: $font-size * 1.1;
+		overflow: hidden;
+
+		&:before {
+			background-color: $bg-color;
+			bottom: 0;
+			position: absolute;
+			right: 0;
+			float: right;
+			text-align:right;
+			content: '\2026';
+			width: $font-size * 1.1;
+		}
+
+		&:after {
+			content: '';
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			z-index: +1;
+			background: $bg-color;
+		}
+	}*/
+}
+
+@mixin media_list_row_width( $width, $vertSpace: 56 ) {
+
+	width:$width;
+
+	@media (min-width: $vertSpace + ( 2 * $width )){
+		width: 2 * $width ;
+	}
+
+	@media (min-width: $vertSpace + ( 3 * $width )){
+		width: 3 * $width ;
+	}
+
+	@media (min-width: $vertSpace + ( 4 * $width )){
+		width: 4 * $width ;
+	}
+
+	@media (min-width: $vertSpace + ( 5 * $width )){
+		width: 5 * $width ;
+	}
+
+	// @media (min-width: $vertSpace + ( 6 * $width )){
+	// 	width: 6 * $width ;
+	// }
+
+	@media (min-width: $vertSpace + ( 7 * $width )){
+		width: 6 * $width ;
+	}
+
+	/* @media (min-width: $vertSpace + ( 7 * $width )){
+		width: 7 * $width ;
+	}
+
+	@media (min-width: $vertSpace + ( 8 * $width )){
+		width: 8 * $width ;
+	}
+
+	@media (min-width: $vertSpace + ( 9 * $width )){
+		width: 9 * $width ;
+	}
+
+	@media (min-width: $vertSpace + ( 10 * $width )){
+		width: 10 * $width ;
+	} */
+
+	.visible-sidebar &{
+
+		@media (min-width: $vertSpace + ( 2 * $width )){
+			width: 1 * $width ;
+		}
+
+		@media (min-width: $vertSpace + ( 3 * $width )){
+			width: 2 * $width ;
+		}
+
+		@media (min-width: $vertSpace + ( 4 * $width )){
+			width: 3 * $width ;
+		}
+
+		@media (min-width: $vertSpace + ( 5 * $width )){
+			width: 4 * $width ;
+		}
+
+		// @media (min-width: $vertSpace + ( 6 * $width )){
+		// 	width: 5 * $width ;
+		// }
+
+		@media (min-width: $vertSpace + ( 7 * $width )){
+			width: 6 * $width ;
+		}
+
+		/* @media (min-width: $vertSpace + ( 8 * $width )){
+			width: 7 * $width ;
+		}
+
+		@media (min-width: $vertSpace + ( 9 * $width )){
+			width: 8 * $width ;
+		}
+
+		@media (min-width: $vertSpace + ( 10 * $width )){
+			width: 9 * $width ;
+		} */
+	}
+}
