@@ -1,6 +1,6 @@
 #!/bin/bash
 # should be run as root and only on Ubuntu 22
-echo "Welcome to the Cinemata installation!";
+echo "Welcome to the CinemataCMS installation!";
 
 if [ `id -u` -ne 0 ]
   then echo "Please run as root"
@@ -40,29 +40,29 @@ rm -rf tmp ffmpeg-release-amd64-static.tar.xz
 echo "ffmpeg installed to /usr/local/bin"
 
 read -p "Enter portal URL, or press enter for localhost : " FRONTEND_HOST
-read -p "Enter portal name, or press enter for 'MediaCMS : " PORTAL_NAME
+read -p "Enter portal name, or press enter for 'CinemataCMS : " PORTAL_NAME
 
-[ -z "$PORTAL_NAME" ] && PORTAL_NAME='MediaCMS'
+[ -z "$PORTAL_NAME" ] && PORTAL_NAME='CinemataCMS'
 [ -z "$FRONTEND_HOST" ] && FRONTEND_HOST='localhost'
 
-echo 'Creating database to be used in MediaCMS'
+echo 'Creating database to be used in CinemataCMS'
 
-su -c "psql -c \"CREATE DATABASE mediacms\"" postgres
-su -c "psql -c \"CREATE USER mediacms WITH ENCRYPTED PASSWORD 'mediacms'\"" postgres
-su -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE mediacms TO mediacms\"" postgres
+su -c "psql -c \"CREATE DATABASE cinematacms\"" postgres
+su -c "psql -c \"CREATE USER cinematacms WITH ENCRYPTED PASSWORD 'cinematacms'\"" postgres
+su -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE cinematacms TO cinematacms"" postgres
 
-echo 'Creating python virtualenv on /home/mediacms.io'
+echo 'Creating python virtualenv on /home/cinemata'
 
-cd /home/mediacms.io
+cd /home/cinemata
 virtualenv . --python=python3
-source  /home/mediacms.io/bin/activate
-cd mediacms
+source  /home/cinemata/bin/activate
+cd cinematacms
 pip install -r requirements.txt
 cd .. && git clone https://github.com/ggerganov/whisper.cpp.git
 cd whisper.cpp/
 bash ./models/download-ggml-model.sh large-v3
 make
-cd ../mediacms
+cd ../cinematacms
 
 SECRET_KEY=`python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'`
 
@@ -70,7 +70,7 @@ SECRET_KEY=`python -c 'from django.core.management.utils import get_random_secre
 FRONTEND_HOST=`echo "$FRONTEND_HOST" | sed -r 's/http:\/\///g'`
 FRONTEND_HOST=`echo "$FRONTEND_HOST" | sed -r 's/https:\/\///g'`
 
-sed -i s/localhost/$FRONTEND_HOST/g deploy/mediacms.io
+sed -i s/localhost/$FRONTEND_HOST/g deploy/cinemata
 
 FRONTEND_HOST_HTTP_PREFIX='http://'$FRONTEND_HOST
 
@@ -94,28 +94,28 @@ echo "from users.models import User; User.objects.create_superuser('admin', 'adm
 
 echo "from django.contrib.sites.models import Site; Site.objects.update(name='$FRONTEND_HOST', domain='$FRONTEND_HOST')" | python manage.py shell
 
-chown -R www-data. /home/mediacms.io/
+chown -R www-data. /home/cinemata/
 cp deploy/celery_long.service /etc/systemd/system/celery_long.service && systemctl enable celery_long && systemctl start celery_long
 cp deploy/celery_short.service /etc/systemd/system/celery_short.service && systemctl enable celery_short && systemctl start celery_short
 cp deploy/celery_beat.service /etc/systemd/system/celery_beat.service && systemctl enable celery_beat &&systemctl start celery_beat
-cp deploy/mediacms.service /etc/systemd/system/mediacms.service && systemctl enable mediacms.service && systemctl start mediacms.service
+cp deploy/cinematacms.service /etc/systemd/system/cinematacms.service && systemctl enable cinematacms.service && systemctl start cinematacms.service
 
 cp deploy/celery_whisper.service /etc/systemd/system/celery_whisper.service && systemctl enable celery_whisper.service && systemctl start celery_whisper.service
 
 
-mkdir -p /etc/letsencrypt/live/mediacms.io/
+mkdir -p /etc/letsencrypt/live/cinemata/
 mkdir -p /etc/letsencrypt/live/$FRONTEND_HOST
 mkdir -p /etc/nginx/sites-enabled
 mkdir -p /etc/nginx/sites-available
 mkdir -p /etc/nginx/dhparams/
 rm -rf /etc/nginx/conf.d/default.conf
 rm -rf /etc/nginx/sites-enabled/default
-cp deploy/mediacms.io_fullchain.pem /etc/letsencrypt/live/$FRONTEND_HOST/fullchain.pem
+cp deploy/cinemata_fullchain.pem /etc/letsencrypt/live/$FRONTEND_HOST/fullchain.pem
 # this is just a self signed key, will be replaced by certbot
-cp deploy/mediacms.io_privkey.pem /etc/letsencrypt/live/$FRONTEND_HOST/privkey.pem
+cp deploy/cinemata_privkey.pem /etc/letsencrypt/live/$FRONTEND_HOST/privkey.pem
 cp deploy/dhparams.pem /etc/nginx/dhparams/dhparams.pem
-cp deploy/mediacms.io /etc/nginx/sites-available/mediacms.io
-ln -s /etc/nginx/sites-available/mediacms.io /etc/nginx/sites-enabled/mediacms.io
+cp deploy/cinemata /etc/nginx/sites-available/cinemata
+ln -s /etc/nginx/sites-available/cinemata /etc/nginx/sites-enabled/cinemata
 cp deploy/uwsgi_params /etc/nginx/sites-enabled/uwsgi_params
 cp deploy/nginx.conf /etc/nginx/
 systemctl stop nginx
@@ -145,12 +145,12 @@ fi
 
 # Bento4 utility installation, for HLS
 
-cd /home/mediacms.io/mediacms
+cd /home/cinemata/cinematacms
 wget http://zebulon.bok.net/Bento4/binaries/Bento4-SDK-1-6-0-632.x86_64-unknown-linux.zip
 unzip Bento4-SDK-1-6-0-632.x86_64-unknown-linux.zip
-mkdir -p /home/mediacms.io/mediacms/media_files/hls
+mkdir -p /home/cinemata/cinematacms/media_files/hls
 
 # last, set default owner
-chown -R www-data. /home/mediacms.io/
+chown -R www-data. /home/cinemata/
 
-echo 'Cinemata installation completed, open browser on http://'"$FRONTEND_HOST"' and login with user admin and password '"$ADMIN_PASS"''
+echo 'CinemataCMS installation completed, open browser on http://'"$FRONTEND_HOST"' and login with user admin and password '"$ADMIN_PASS"''

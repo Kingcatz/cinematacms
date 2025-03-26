@@ -202,7 +202,7 @@ REST_FRAMEWORK = {
 
 
 SECRET_KEY = "2dii4cog7k=5n37$fz)8dst)kg(s3&10)^qa*gv(kk+nv-z&cu"
-# mediacms related
+# cinematacms related
 
 # valid choices here are 'public', 'private', 'unlisted
 PORTAL_WORKFLOW = "public"
@@ -315,18 +315,18 @@ UNLISTED_WORKFLOW_MAKE_PUBLIC_UPON_COMMENTARY_ADD = False
 UNLISTED_WORKFLOW_MAKE_PRIVATE_UPON_COMMENTARY_DELETE = False
 
 MP4HLS_COMMAND = (
-    "/home/mediacms.io/mediacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
+    "/home/cinemata/cinematacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
 )
 
 
-DEFAULT_FROM_EMAIL = "info@mediacms.io"
+DEFAULT_FROM_EMAIL = "info@cinemata.org"
 EMAIL_HOST_PASSWORD = "xyz"
-EMAIL_HOST_USER = "info@mediacms.io"
+EMAIL_HOST_USER = "info@cinemata.org"
 EMAIL_USE_TLS = True
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-EMAIL_HOST = "mediacms.io"
+EMAIL_HOST = "cinemata.org"
 EMAIL_PORT = 587
-ADMIN_EMAIL_LIST = ["info@mediacms.io"]
+ADMIN_EMAIL_LIST = ["info@cinemata.org"]
 
 CKEDITOR_CONFIGS = {
     "default": {
