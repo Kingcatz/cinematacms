@@ -373,7 +373,7 @@ UNLISTED_WORKFLOW_MAKE_PUBLIC_UPON_COMMENTARY_ADD = False
 UNLISTED_WORKFLOW_MAKE_PRIVATE_UPON_COMMENTARY_DELETE = False
 
 MP4HLS_COMMAND = (
-    "/home/mediacms.io/mediacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
+    "/home/cinemata/cinematacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
 )
 
 
@@ -427,11 +427,11 @@ DJANGO_ADMIN_URL = "admin/"
 from .local_settings import *
 ALLOWED_HOSTS.append(FRONTEND_HOST.replace("http://", "").replace("https://", ""))
 
-WHISPER_COMMAND = "/home/mediacms.io/bin/whisper"
+WHISPER_COMMAND = "/home/cinemata/bin/whisper"
 WHISPER_SIZE = "base"
 
-WHISPER_CPP_COMMAND = "/home/mediacms.io/whisper.cpp/main"
-WHISPER_CPP_MODEL = "/home/mediacms.io/whisper.cpp/models/ggml-large-v3.bin"
+WHISPER_CPP_COMMAND = "/home/cinemata/whisper.cpp/main"
+WHISPER_CPP_MODEL = "/home/cinemata/whisper.cpp/models/ggml-large-v3.bin"
 
 
 ALLOWED_MEDIA_UPLOAD_TYPES = ['video']
