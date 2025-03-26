@@ -136,12 +136,12 @@ Help us empower voices across the Asia-Pacific and foster meaningful discussions
 ## Installation
 The instructions have been tested on Ubuntu 22.04. Make sure there is no other services running in the system, specifically no nginx/postgresql, as the installation script will install them and replace any configs.
 
-As root, clone the repository on /home/cinemata and run install.sh:
+As root, clone the repository on /home/mediacms.io and run install.sh:
 
 ```
 # cd /home
-# mkdir cinemata && cd cinemata
-# git clone https://github.com/EngageMedia-tech/cinematacms cinematacms && cd cinematacms
+# mkdir mediacms.io && cd mediacms.io
+# git clone https://github.com/EngageMedia-video/cinemata mediacms && cd mediacms
 # chmod +x install.sh
 # ./install.sh
 ```

@@ -3,9 +3,9 @@ server {
     server_name localhost;
 
     gzip on;
-    access_log /var/log/nginx/cinemata.access.log;
+    access_log /var/log/nginx/mediacms.io.access.log;
 
-    error_log  /var/log/nginx/cinemata.error.log  warn;
+    error_log  /var/log/nginx/mediacms.io.error.log  warn;
 
 #    # redirect to https if logged in
 #    if ($http_cookie ~* "sessionid") {
@@ -18,15 +18,15 @@ server {
 #    }
 
     location /static {
-        alias /home/cinemata/cinematacms/static ;
+        alias /home/mediacms.io/mediacms/static ;
     }
 
     location /media/original {
-        alias /home/cinemata/cinematacms/media_files/original;
+        alias /home/mediacms.io/mediacms/media_files/original;
     }
 
     location /media {
-        alias /home/cinemata/cinematacms/media_files ;
+        alias /home/mediacms.io/mediacms/media_files ;
     }
 
     location / {
@@ -54,22 +54,22 @@ server {
     ssl_prefer_server_ciphers on;
 
     gzip on;
-    access_log /var/log/nginx/cinemata.access.log;
+    access_log /var/log/nginx/mediacms.io.access.log;
 
-    error_log  /var/log/nginx/cinemata.error.log  warn;
+    error_log  /var/log/nginx/mediacms.io.error.log  warn;
 
     location /static {
-        alias /home/cinemata/cinematacms/static ;
+        alias /home/mediacms.io/mediacms/static ;
     }
 
     location /media/original {
-        alias /home/cinemata/cinematacms/media_files/original;
+        alias /home/mediacms.io/mediacms/media_files/original;
         #auth_basic "auth protected area";
-        #auth_basic_user_file /home/cinemata/cinematacms/deploy/local_install/.htpasswd;
+        #auth_basic_user_file /home/mediacms.io/mediacms/deploy/local_install/.htpasswd;
     }
 
     location /media {
-        alias /home/cinemata/cinematacms/media_files ;
+        alias /home/mediacms.io/mediacms/media_files ;
     }
 
     location / {

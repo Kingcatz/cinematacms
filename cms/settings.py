@@ -135,11 +135,11 @@ LOGGING = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "cinematacms",
+        "NAME": "mediacms",
         "HOST": "127.0.0.1",
         "PORT": "5432",
-        "USER": "cinematacms",
-        "PASSWORD": "cinematacms",
+        "USER": "mediacms",
+        "PASSWORD": "mediacms",
     }
 }
 
@@ -256,7 +256,7 @@ REST_FRAMEWORK = {
 }
 
 
-# cinematacms related
+# mediacms related
 
 # valid choices here are 'public', 'private', 'unlisted
 PORTAL_WORKFLOW = "public"
@@ -284,7 +284,7 @@ RUNNING_STATE_STALE = 60 * 60 * 2
 # to get to private state automatically
 REPORTED_TIMES_THRESHOLD = 10
 
-MEDIA_IS_REVIEWED = False  # whether an admin needs to review a media file.
+MEDIA_IS_REVIEWED = True  # whether an admin needs to review a media file.
 # By default consider this is not needed.
 # If set to False, then each new media need be reviewed
 
@@ -373,20 +373,20 @@ UNLISTED_WORKFLOW_MAKE_PUBLIC_UPON_COMMENTARY_ADD = False
 UNLISTED_WORKFLOW_MAKE_PRIVATE_UPON_COMMENTARY_DELETE = False
 
 MP4HLS_COMMAND = (
-    "/home/cinemata/cinematacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
+    "/home/mediacms.io/mediacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
 )
 
 
 DEBUG = False
 
-DEFAULT_FROM_EMAIL = "info@cinemata.org"
+DEFAULT_FROM_EMAIL = "info@mediacms.io"
 EMAIL_HOST_PASSWORD = "xyz"
-EMAIL_HOST_USER = "info@cinemata.org"
+EMAIL_HOST_USER = "info@mediacms.io"
 EMAIL_USE_TLS = True
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
-EMAIL_HOST = "cinemata.org"
+EMAIL_HOST = "mediacms.io"
 EMAIL_PORT = 587
-ADMIN_EMAIL_LIST = ["info@cinemata.org"]
+ADMIN_EMAIL_LIST = ["info@mediacms.io"]
 
 CKEDITOR_CONFIGS = {
     "default": {
@@ -427,11 +427,11 @@ DJANGO_ADMIN_URL = "admin/"
 from .local_settings import *
 ALLOWED_HOSTS.append(FRONTEND_HOST.replace("http://", "").replace("https://", ""))
 
-WHISPER_COMMAND = "/home/cinemata/bin/whisper"
+WHISPER_COMMAND = "/home/mediacms.io/bin/whisper"
 WHISPER_SIZE = "base"
 
-WHISPER_CPP_COMMAND = "/home/cinemata/whisper.cpp/main"
-WHISPER_CPP_MODEL = "/home/cinemata/whisper.cpp/models/ggml-large-v3.bin"
+WHISPER_CPP_COMMAND = "/home/mediacms.io/whisper.cpp/main"
+WHISPER_CPP_MODEL = "/home/mediacms.io/whisper.cpp/models/ggml-large-v3.bin"
 
 
 ALLOWED_MEDIA_UPLOAD_TYPES = ['video']
