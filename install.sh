@@ -76,7 +76,7 @@ FRONTEND_HOST_HTTP_PREFIX='http://'$FRONTEND_HOST
 
 echo 'FRONTEND_HOST='\'"$FRONTEND_HOST_HTTP_PREFIX"\' >> cms/local_settings.py
 echo 'PORTAL_NAME='\'"$PORTAL_NAME"\' >> cms/local_settings.py
-echo "SSL_FRONTEND_HOST = FRONTEND_HOST.replace('http', 'https')" >> cms/local_settings.py
+echo 'SSL_FRONTEND_HOST = FRONTEND_HOST.replace("http", "https")' >> cms/local_settings.py
 
 echo 'SECRET_KEY='\'"$SECRET_KEY"\' >> cms/local_settings.py
 echo "LOCAL_INSTALL = True" >> cms/local_settings.py
