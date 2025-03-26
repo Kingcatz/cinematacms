@@ -156,3 +156,4 @@ chown -R www-data. /home/cinemata/
 echo "CinemataCMS installation completed!"
 echo "Open your browser and go to: http://$FRONTEND_HOST"
 echo "Login with user: admin and password: $ADMIN_PASS"
+
