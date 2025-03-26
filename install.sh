@@ -40,12 +40,12 @@ rm -rf tmp ffmpeg-release-amd64-static.tar.xz
 echo "ffmpeg installed to /usr/local/bin"
 
 read -p "Enter portal URL, or press enter for localhost : " FRONTEND_HOST
-read -p "Enter portal name, or press enter for 'MediaCMS : " PORTAL_NAME
+read -p "Enter portal name, or press enter for 'CinemataCMS : " PORTAL_NAME
 
-[ -z "$PORTAL_NAME" ] && PORTAL_NAME='MediaCMS'
+[ -z "$PORTAL_NAME" ] && PORTAL_NAME='CinemataCMS'
 [ -z "$FRONTEND_HOST" ] && FRONTEND_HOST='localhost'
 
-echo 'Creating database to be used in MediaCMS'
+echo 'Creating database to be used in CinemataCMS'
 
 su -c "psql -c \"CREATE DATABASE mediacms\"" postgres
 su -c "psql -c \"CREATE USER mediacms WITH ENCRYPTED PASSWORD 'mediacms'\"" postgres
@@ -56,7 +56,7 @@ echo 'Creating python virtualenv on /home/mediacms.io'
 cd /home/cinemata
 virtualenv . --python=python3
 source  /home/cinemata/bin/activate
-cd mediacms
+cd cinematacms
 pip install -r requirements.txt
 cd .. && git clone https://github.com/ggerganov/whisper.cpp.git
 cd whisper.cpp/
