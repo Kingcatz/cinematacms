@@ -1,5 +1,5 @@
 [Unit]
-Description=mediacms Celery Service
+Description=mediacms Celery Whisper Service
 After=network.target
 
 [Service]
@@ -18,7 +18,6 @@ Environment=CELERYD_OPTS="-Ofair --prefetch-multiplier=1"
 Environment=CELERYD_PID_FILE="/home/cinemata/cinematacms/pids/%n.pid"
 Environment=CELERYD_LOG_FILE="/home/cinemata/cinematacms/logs/%N.log"
 Environment=CELERYD_LOG_LEVEL="INFO"
-Environment=APP_DIR="/home/cinemata/cinematacms"
 
 ExecStart=/bin/sh -c '${CELERY_BIN} multi start ${CELERYD_NODES} -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL} ${CELERYD_OPTS} --workdir=${APP_DIR} -Q ${CELERY_QUEUE}'
 
@@ -28,4 +27,3 @@ ExecReload=/bin/sh -c '${CELERY_BIN} multi restart ${CELERYD_NODES} -A ${CELERY_
 
 [Install]
 WantedBy=multi-user.target
-
