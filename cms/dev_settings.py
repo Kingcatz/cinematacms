@@ -315,7 +315,7 @@ UNLISTED_WORKFLOW_MAKE_PUBLIC_UPON_COMMENTARY_ADD = False
 UNLISTED_WORKFLOW_MAKE_PRIVATE_UPON_COMMENTARY_DELETE = False
 
 MP4HLS_COMMAND = (
-    "/home/mediacms.io/mediacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
+    "/home/cinemata/cinematacms/Bento4-SDK-1-6-0-632.x86_64-unknown-linux/bin/mp4hls"
 )
 
 
