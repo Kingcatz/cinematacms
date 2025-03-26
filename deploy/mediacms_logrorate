@@ -1,4 +1,4 @@
-/home/mediacms.io/mediacms/logs/*.log {
+/home/cinemata/cinematacms/logs/*.log {
   weekly
   missingok
   rotate 7
