@@ -1,131 +1,160 @@
 #!/bin/bash
-# Should be run as root and only on Ubuntu 22
+# This script should be run as root and only on Ubuntu 22.04
 
 echo "Welcome to the CinemataCMS installation!"
 
+# Ensure the script is run as root
 if [ "$(id -u)" -ne 0 ]; then
     echo "Please run as root"
     exit 1
 fi
 
+# Confirm with the user before proceeding
 while true; do
     read -p "
-This script will update the system, install dependencies, and configure PostgreSQL, NGINX, Redis, and other utilities.
-It should be run on a new system with no running instances of these services.
-Check the script before proceeding. Enter yes or no: " yn
+This script will perform a system update, install required dependencies, and configure PostgreSQL, NGINX, Redis, and other utilities.
+It is intended for a new system with no existing instances of these services. Please review the script before proceeding. Enter yes or no: " yn
     case $yn in
-        [Yy]*) echo "OK!"; break;;
-        [Nn]*) echo "Installation aborted."; exit;;
-        *) echo "Please answer yes or no.";;
+        [Yy]* ) echo "Proceeding with installation..."; break;;
+        [Nn]* ) echo "Installation aborted."; exit;;
+        * ) echo "Please answer yes or no.";;
     esac
 done
 
-osVersion=$(lsb_release -d)
-if [[ $osVersion != *"Ubuntu 22"* ]]; then
-    echo "This script is tested for Ubuntu 22 only. Exiting."
+# Verify the operating system version
+os_version=$(lsb_release -d)
+if [[ $os_version != *"Ubuntu 22.04"* ]]; then
+    echo "This script is designed for Ubuntu 22.04 only."
     exit 1
 fi
 
-echo "Updating system and installing dependencies..."
+# Update system and install dependencies
+echo "Updating system and installing dependencies. This may take a few minutes..."
 apt-get update && apt-get -y upgrade
-apt-get install -y python3-venv python3-dev python3-virtualenv python3-pip virtualenv redis-server \
-    postgresql nginx git gcc vim unzip ffmpeg imagemagick telnet htop certbot make build-essential \
-    libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
-    libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl python3-certbot cmake \
-    libpq-dev python3-certbot-nginx
+apt-get install -y python3-venv python3-dev python3-pip redis-server postgresql nginx git gcc vim unzip ffmpeg imagemagick certbot make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python3-openssl python3-certbot cmake libpq-dev python3-certbot-nginx
 
-echo "Downloading and installing ffmpeg..."
+# Install ffmpeg
+echo "Installing ffmpeg..."
 wget -q https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-mkdir -p tmp
-tar -xf ffmpeg-release-amd64-static.tar.xz --strip-components 1 -C tmp
-cp -v tmp/{ffmpeg,ffprobe,qt-faststart} /usr/local/bin
-rm -rf tmp ffmpeg-release-amd64-static.tar.xz
+mkdir -p /tmp/ffmpeg
+tar -xf ffmpeg-release-amd64-static.tar.xz --strip-components 1 -C /tmp/ffmpeg
+cp -v /tmp/ffmpeg/{ffmpeg,ffprobe,qt-faststart} /usr/local/bin
+rm -rf /tmp/ffmpeg ffmpeg-release-amd64-static.tar.xz
 echo "ffmpeg installed to /usr/local/bin"
 
-read -p "Enter portal URL (default: localhost): " FRONTEND_HOST
-read -p "Enter portal name (default: CinemataCMS): " PORTAL_NAME
+# Prompt for portal URL and name
+read -p "Enter portal URL (e.g., dev.digisec.space) or press enter for localhost: " frontend_host
+read -p "Enter portal name or press enter for 'CinemataCMS': " portal_name
 
-PORTAL_NAME=${PORTAL_NAME:-CinemataCMS}
-FRONTEND_HOST=${FRONTEND_HOST:-localhost}
+# Set default values if none provided
+frontend_host=${frontend_host:-localhost}
+portal_name=${portal_name:-CinemataCMS}
 
-# Remove http(s) prefix
-FRONTEND_HOST=$(echo "$FRONTEND_HOST" | sed -r 's|https?://||g')
+# Create PostgreSQL database and user
+echo "Configuring PostgreSQL database..."
+sudo -u postgres psql <<EOF
+DO \$\$
+BEGIN
+   IF NOT EXISTS (SELECT FROM pg_database WHERE datname = 'cinematacms') THEN
+      CREATE DATABASE cinematacms;
+   END IF;
+END
+\$\$;
 
-echo "Creating PostgreSQL database and user..."
-su -c "psql -tc \"SELECT 1 FROM pg_database WHERE datname = 'cinematacms'\" | grep -q 1 || psql -c \"CREATE DATABASE cinematacms\"" postgres
-su -c "psql -tc \"SELECT 1 FROM pg_roles WHERE rolname = 'cinematacms'\" | grep -q 1 || psql -c \"CREATE USER cinematacms WITH ENCRYPTED PASSWORD 'cinematacms'\"" postgres
-su -c "psql -c \"GRANT ALL PRIVILEGES ON DATABASE cinematacms TO cinematacms\"" postgres
+DO \$\$
+BEGIN
+   IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'cinematacms') THEN
+      CREATE ROLE cinematacms WITH LOGIN PASSWORD 'cinematacms';
+   END IF;
+END
+\$\$;
 
+GRANT ALL PRIVILEGES ON DATABASE cinematacms TO cinematacms;
+EOF
+
+# Create Python virtual environment
 echo "Setting up Python virtual environment..."
+mkdir -p /home/cinemata
 cd /home/cinemata
-virtualenv . --python=python3
-source /home/cinemata/bin/activate
+python3 -m venv venv
+source venv/bin/activate
+
+# Clone the CinemataCMS repository
+if [ ! -d "cinematacms" ]; then
+    git clone https://github.com/EngageMedia-Tech/cinematacms.git
+fi
 cd cinematacms
+
+# Install Python dependencies
 pip install -r requirements.txt
 
-echo "Setting up secret key..."
-SECRET_KEY=$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')
+# Download and build whisper.cpp
+if [ ! -d "../whisper.cpp" ]; then
+    git clone https://github.com/ggerganov/whisper.cpp.git ../whisper.cpp
+fi
+cd ../whisper.cpp
+bash ./models/download-ggml-model.sh large-v3
+make
+cd ../cinematacms
 
-echo "Configuring Django settings..."
-echo "FRONTEND_HOST='http://$FRONTEND_HOST'" >> cms/local_settings.py
-echo "PORTAL_NAME='$PORTAL_NAME'" >> cms/local_settings.py
-echo "SSL_FRONTEND_HOST = FRONTEND_HOST.replace('http', 'https')" >> cms/local_settings.py
-echo "SECRET_KEY='$SECRET_KEY'" >> cms/local_settings.py
-echo "LOCAL_INSTALL = True" >> cms/local_settings.py
+# Generate Django secret key
+secret_key=$(python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')
 
-mkdir -p logs pids
+# Configure local settings
+frontend_host_http="http://$frontend_host"
+ssl_frontend_host="https://$frontend_host"
+
+cat <<EOL > cms/local_settings.py
+FRONTEND_HOST = '$frontend_host_http'
+PORTAL_NAME = '$portal_name'
+SSL_FRONTEND_HOST = '$ssl_frontend_host'
+SECRET_KEY = '$secret_key'
+LOCAL_INSTALL = True
+EOL
+
+# Create necessary directories
+mkdir -p logs pids media_files/hls
+
+# Apply Django migrations and collect static files
 python manage.py makemigrations files users actions
 python manage.py migrate
 python manage.py loaddata fixtures/encoding_profiles.json
 python manage.py loaddata fixtures/categories.json
 python manage.py collectstatic --noinput
 
-ADMIN_PASS=$(python -c "import secrets; print(''.join(secrets.choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(10)))")
-echo "from users.models import User; User.objects.create_superuser('admin', 'admin@example.com', '$ADMIN_PASS')" | python manage.py shell
+# Create Django superuser
+admin_pass=$(python -c "import secrets; print(''.join(secrets.choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(10)))")
+echo "from users.models import User; User.objects.create_superuser('admin', 'admin@example.com', '$admin_pass')" | python manage.py shell
 
-python manage.py shell <<EOF
-from django.contrib.sites.models import Site
-Site.objects.update_or_create(id=1, defaults={'name': "$FRONTEND_HOST", 'domain': "$FRONTEND_HOST"})
-EOF
+# Update Django sites framework
+echo "from django.contrib.sites.models import Site; Site.objects.update_or_create(id=1, defaults={'domain': '$frontend_host', 'name': '$frontend_host'})" | python manage.py shell
 
-chown -R www-data. /home/cinemata/
+# Set ownership
+chown -R www-data:www-data /home/cinemata/
 
-systemctl enable --now celery_long.service celery_short.service celery_beat.service cinematacms.service celery_whisper.service
+# Configure and start services
+for service in celery_long celery_short celery_beat cinematacms celery_whisper; do
+    if [ -f "deploy/${service}.service" ]; then
+        cp "deploy/${service}.service" /etc/systemd/system/
+        systemctl enable $service
+        systemctl start $service
+    else
+        echo "Warning: ${service}.service file missing, skipping."
+    fi
+done
 
-mkdir -p /etc/letsencrypt/live/$FRONTEND_HOST /etc/nginx/sites-enabled /etc/nginx/sites-available /etc/nginx/dhparams
-rm -rf /etc/nginx/conf.d/default.conf /etc/nginx/sites-enabled/default
-cp deploy/cinemata_fullchain.pem /etc/letsencrypt/live/$FRONTEND_HOST/fullchain.pem
-cp deploy/cinemata_privkey.pem /etc/letsencrypt/live/$FRONTEND_HOST/privkey.pem
-cp deploy/dhparams.pem /etc/nginx/dhparams/dhparams.pem
-cp deploy/cinemata /etc/nginx/sites-available/cinemata
-ln -s /etc/nginx/sites-available/cinemata /etc/nginx/sites-enabled/cinemata
-cp deploy/uwsgi_params /etc/nginx/sites-enabled/uwsgi_params
-cp deploy/nginx.conf /etc/nginx/
-
-systemctl restart nginx
-
-if [ "$FRONTEND_HOST" != "localhost" ]; then
-    echo "Attempting to obtain SSL certificate for $FRONTEND_HOST"
-    certbot --nginx -n --agree-tos --register-unsafely-without-email -d $FRONTEND_HOST
-    certbot --nginx -n --agree-tos --register-unsafely-without-email -d $FRONTEND_HOST
-    systemctl restart nginx
+# Configure NGINX
+if [ -f "deploy/cinemata" ]; then
+    cp deploy/cinemata /etc/nginx/sites-available/cinemata
+    ln -sf /etc/nginx/sites-available/cinemata /etc/nginx/sites-enabled/
 else
-    echo "Skipping SSL certificate setup for localhost."
+    echo "Warning: NGINX configuration file 'cinemata' missing, skipping."
 fi
 
-if [ "$FRONTEND_HOST" != "localhost" ]; then
-    openssl dhparam -out /etc/nginx/dhparams/dhparams.pem 4096
-    systemctl restart nginx
-else
-    echo "Skipping DH params generation for localhost."
-fi
+# Obtain SSL certificate
+if [ "$frontend_host" != "localhost" ]; then
+    echo "Attempting to obtain SSL certificate for $frontend_host..."
+    certbot --nginx -n --agree-tos --register-unsafely-without-email -d "$frontend_host"
 
-echo "Setting up Bento4 for HLS support..."
-cd /home/cinemata/cinematacms
-wget http://zebulon.bok.net/Bento4/binaries/Bento4-SDK-1-6-0-632.x86_64-unknown-linux.zip
-unzip Bento4-SDK-1-6-0-632.x86_64-unknown-linux.zip
-mkdir -p /home/cinemata/cinematacms/media_files/hls
-
-chown -R www-data. /home/cinemata/
-
-echo "Installation complete. Access CinemataCMS at http://$FRONTEND_HOST with admin/admin@example.com and password: $ADMIN_PASS"
+::contentReference[oaicite:2]{index=2}
+ 
