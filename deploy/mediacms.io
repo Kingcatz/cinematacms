@@ -18,15 +18,15 @@ server {
 #    }
 
     location /static {
-        alias /home/mediacms.io/mediacms/static ;
+        alias /home/cinemata/cinematacms/static ;
     }
 
     location /media/original {
-        alias /home/mediacms.io/mediacms/media_files/original;
+        alias /home/cinemata/cinematacms/media_files/original;
     }
 
     location /media {
-        alias /home/mediacms.io/mediacms/media_files ;
+        alias /home/cinemata/cinematacms/media_files ;
     }
 
     location / {
@@ -63,13 +63,13 @@ server {
     }
 
     location /media/original {
-        alias /home/mediacms.io/mediacms/media_files/original;
+        alias /home/cinemata/cinematacms/media_files/original;
         #auth_basic "auth protected area";
-        #auth_basic_user_file /home/mediacms.io/mediacms/deploy/local_install/.htpasswd;
+        #auth_basic_user_file /home/cinemata/cinematacms/deploy/local_install/.htpasswd;
     }
 
     location /media {
-        alias /home/mediacms.io/mediacms/media_files ;
+        alias /home/cinemata/cinematacms/media_files ;
     }
 
     location / {
