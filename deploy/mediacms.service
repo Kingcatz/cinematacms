@@ -1,13 +1,11 @@
 [Unit]
-Description=uwsgi mediacms.io
+Description=uwsgi cinemata
 
 [Service]
 ExecStart=/home/cinemata/bin/uwsgi --ini /home/cinemata/cinematacms/uwsgi.ini
 ExecStop=/usr/bin/killall -9 uwsgi
 RestartSec=3
-#ExecRestart=killall -9 uwsgi; sleep 5; /home/sss/bin/uwsgi --ini /home/sss/wordgames/uwsgi.ini
 Restart=always
-
 
 [Install]
 WantedBy=multi-user.target

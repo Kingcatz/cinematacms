@@ -58,9 +58,9 @@ server {
 
     error_log  /var/log/nginx/mediacms.io.error.log  warn;
 
-    location /static {
-        alias /home/mediacms.io/mediacms/static ;
-    }
+location /static {
+    alias /home/cinemata/cinematacms/static ;
+}
 
     location /media/original {
         alias /home/cinemata/cinematacms/media_files/original;
