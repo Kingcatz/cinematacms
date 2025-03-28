@@ -131,7 +131,7 @@ Help us empower voices across the Asia-Pacific and foster meaningful discussions
 #### 6. Community Screening Features
 - Implement tools for online community screening and small film festival events
 
-
+# Documentation
 
 ## Installation
 The instructions have been tested on Ubuntu 22.04. Make sure there is no other services running in the system, specifically no nginx/postgresql, as the installation script will install them and replace any configs.
@@ -146,5 +146,11 @@ As root, clone the repository on /home/cinemata and run install.sh:
 # ./install.sh
 ```
 
-This should take a few minutes with dependencies etc. Make sure you enter a valid domain when asked (eg staging.cinemata.org)
+This should take a few minutes with dependencies, etc. Make sure you enter a valid domain when asked (eg staging.cinemata.org)
+
+## Customization
+
+  - [Site Branding](docs/customization/branding.md)
+
+
 
