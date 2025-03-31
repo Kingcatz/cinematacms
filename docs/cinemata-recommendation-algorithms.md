@@ -1,4 +1,4 @@
-# Understanding Video Recommendation Algorithms in Cinemata/MediaCMS
+# Understanding Video Recommendation Algorithms in CinemataCMS
 
 This guide explains how Cinemata, built on MediaCMS, handles video recommendations, including the algorithms behind popular videos, related content suggestions, and featured media.
 
@@ -86,12 +86,12 @@ This feature is managed through the admin interface and gives site managers dire
 
 The recommendation system has several notable technical aspects:
 
-1. **Hybrid Approach**: Combines engagement metrics (views, likes) with recency factors
+1. **Hybrid Approach** - Combines engagement metrics (views, likes) with recency factors
 2. **Time-Based Windows**: Different time windows (7 days for views, 6 months for likes) balance recent popularity with sustained value
-3. **Caching Strategy**: Results are cached to improve performance and reduce database load
-4. **Transparent Algorithms**: Uses straightforward, explainable algorithms rather than black-box ML approaches
-5. **Customizable Strategy**: Site administrators can choose between related content strategies
-6. **Manual Override**: Featured content functionality allows for editorial control
+3. **Caching Strategy** - Results are cached to improve performance and reduce database load
+4. **Transparent Algorithms** - Uses straightforward, explainable algorithms rather than black-box ML approaches
+5. **Customizable Strategy** - Site administrators can choose between related content strategies
+6. **Manual Override** - Featured content functionality allows for editorial control
 
 ## Customizing Recommendation Behavior
 
