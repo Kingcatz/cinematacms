@@ -148,6 +148,8 @@ As root, clone the repository on /home/cinemata and run install.sh:
 
 This should take a few minutes with dependencies, etc. Make sure you enter a valid domain when asked (eg staging.cinemata.org)
 
+Read the [post-installation guide](docs/Post-installation-guide.md) to populate your site with content on the frontpage. 
+
 ## Customization
 
   - [Site Branding](docs/customization/branding.md)
