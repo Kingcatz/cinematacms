@@ -61,7 +61,7 @@ Help us empower voices across the Asia-Pacific and foster meaningful discussions
 - Initiate outreach programs targeting FOSS communities in Southeast Asia
 - Organize virtual workshops and hackathons to encourage community involvement
 
-#### 3. File Upload System
+#### 4. File Upload System
 - Implementation of reliable chunked upload system
 - Cloudflare Pro integration and configuration
 - Upload size management based on user roles
