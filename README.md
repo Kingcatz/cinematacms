@@ -54,22 +54,20 @@ Help us empower voices across the Asia-Pacific and foster meaningful discussions
 - Implement caching and Content Delivery Network (CDN) solutions to improve website loading speed
 - Server location optimization assessment
 
+#### 3. Open-sourcing initiative
+- Create comprehensive developer documentation and API references
+- Develop user guides with visual tutorials for common workflows
+- Establish contribution guidelines and code of conduct
+- Initiate outreach programs targeting FOSS communities in Southeast Asia
+- Organize virtual workshops and hackathons to encourage community involvement
+
 #### 3. File Upload System
 - Implementation of reliable chunked upload system
 - Cloudflare Pro integration and configuration
 - Upload size management based on user roles
 - Enhanced upload progress monitoring and error handling
 
-#### 4. Expanded Django Admin Functionality
-- Configure maximum upload sizes for each user role: Contributor, Trusted user, Editor and Manager
-- Ability to reset transcoding and Whisper translations via Django admin
-
-#### 5. Notification System
-- Comments on user's content
-- Likes on user's content
-- User's promotion to a Trusted User and other user roles
-
-#### 6. Rich Text Input Enhancements
+#### 4. Rich Text Input Enhancements
 - Upgrade the existing rich text formatting functionality in Media and Static pages input fields to improve user experience, increase reliability, and expand formatting options
 - Add form creation support in sidebar pages to host Trusted User applications
 
@@ -87,22 +85,31 @@ Help us empower voices across the Asia-Pacific and foster meaningful discussions
 - Translate the user interface into multiple languages, focusing on Asia-Pacific languages
 - Implement region-specific content recommendations
 
-#### 4. Content Curation and Discovery
+#### 3. Expanded Django Admin Functionality
+- Configure maximum upload sizes for each user role: Contributor, Trusted user, Editor and Manager
+- Ability to reset transcoding and Whisper translations via Django admin
+
+#### 4. Notification System
+- Comments on user's content
+- Likes on user's content
+- User's promotion to a Trusted User and other user roles
+
+#### 5. Content Curation and Discovery
 - Easily view curated playlists and collections based on themes or genres
 - Improve and implement the site's tagging system for more granular content categorization
 
-#### 5. Video Upload Process Enhancements
+#### 6. Video Upload Process Enhancements
 - Redesign the upload flow to allow metadata input before video upload
 - Add the ability for users to easily remove or replace uploaded videos
 - Implement a progress bar and estimated time for video processing
 
-#### 6. Monetization Options
+#### 7. Monetization Options
 - Build a donation system for viewers to support content creators via mobile wallets
 
-#### 7. Members-only Features
+#### 8. Members-only Features
 - Unique featured video and playlists on the front page as a precursor for 'Cinemata Premium/Prism'
 
-#### 8. Cloud Infrastructure Exploration
+#### 9. Cloud Infrastructure Exploration
 - Move media processing (video transcoding, thumbnail generation, Whisper translations) to cloud-native platform while maintaining current core infrastructure
 - Set up content delivery optimization through cloud services
 - Implement monitoring system for cloud resource usage
